@@ -1,5 +1,5 @@
-def lines(lines=40):
-    print("~" * lines)
+def lines(symbol="~", lines=40):
+    print(symbol * lines)
 
 
 def title(msg):
