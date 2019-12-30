@@ -13,8 +13,11 @@ def inputs():
         lines('-')
         result = sql.selectAll()
 
+        lines('-',40)
+        print(str("Contas").center(40))
         if result == '':
             print('Vazio!, adicione as conta e senhas para salvar, para visualizar aqui')
+            
         else :
             print(f"{result.center(40)}")
 
@@ -25,6 +28,7 @@ def inputs():
         lines('-')
 
         inserter = {}
+        inserter['account'] = str(input('Conta: '))
         inserter['name'] = str(input('Nome: '))
         inserter['password'] = str(input('senha: '))
 
@@ -39,6 +43,7 @@ def inputs():
 
         inserter = {}
         inserter['id'] = str(input('Id: '))
+        inserter['account'] = str(input('Conta: '))
         inserter['name'] = str(input('Nome: '))
         inserter['password'] = str(input('senha: '))
         sql.update(inserter)
@@ -46,7 +51,7 @@ def inputs():
         if sql.update(inserter):
             print("Dados atualizados com sucesso! :)")
         else:
-            print('[ERRO] verifique os dados ou contate ajuda especialziada :(')
+            print('[ERRO] verifique os dados ou contate ajuda especializada :(')
 
         lines('-')
         sleep(2)
@@ -57,7 +62,7 @@ def inputs():
         if sql.delete(deleteId):
             print('Deletado com Sucesso :)')
         else:
-            print('[ERRO] verifique os dados ou contate ajuda especialziada :(')
+            print('[ERRO] verifique os dados ou contate ajuda especializada :(')
         
         sleep(2)
 

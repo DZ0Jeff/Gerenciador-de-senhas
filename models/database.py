@@ -1,4 +1,5 @@
 import sqlite3
+from views.visual import lines
 
 class Data:
 
@@ -11,46 +12,45 @@ class Data:
         return self.cursor.execute(
             '''CREATE TABLE IF NOT EXISTS senhas (
                 id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                account     VARCHAR(255),
                 name        VARCHAR(255),
                 password    VARCHAR(255)
             )'''
-        )
+        )      
 
     def insert(self, inserter):
-        insertInput = inserter['name'], inserter['password']
+        insertInput = inserter['account'], inserter['name'], inserter['password']
 
-        self.cursor.execute('''INSERT INTO senhas(name, password) VALUES(?,?)''', insertInput)
+        self.cursor.execute('''INSERT INTO senhas(account, name, password) VALUES(?,?,?)''', insertInput)
         self.connection.commit()
-        self.closeConnection()
 
     def selectAll(self):
         query = self.cursor.execute("SELECT * FROM senhas")
         result = ''
 
         for item in query:
-            result += f"\nId: {item[0]} - Conta: {item[1]} - senha: {item[2]}"
+            result += f"""\n| Id: {item[0]} \n| Conta: {item[1]} \n| Conta: {item[2]} \n| senha: {item[3]} \n"""
 
-        self.closeConnection()
+        
         return result
 
     def update(self, target):
-        innerInput = target['name'], target['password'], target['id']
+        innerInput = target['account'], target['name'], target['password'], target['id']
         sql = '''
             UPDATE senhas 
-                SET name = ?, 
+                SET account = ?,
+                name = ?, 
                 password = ? 
             WHERE id = ? 
         '''
 
         self.cursor.execute(sql, innerInput)
         self.connection.commit()
-        self.closeConnection()
 
     def delete(self, id):
         id = (id, )
         self.cursor.execute(f"DELETE FROM senhas WHERE id = ?", id)
         self.connection.commit()
-        self.closeConnection()
 
     def closeConnection(self):
         return self.connection.close()
